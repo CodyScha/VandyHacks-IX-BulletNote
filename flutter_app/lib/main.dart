@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.deepOrange,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Note Taking'),
     );
   }
 }
@@ -110,7 +110,10 @@ class MyHomePageState extends State<MyHomePage> {
   void splitText(String word, int index) {
     setState(() {
       List<String> splitTestWords = _lastWords.split(' ');
-      splitTestWords[index] = '${splitTestWords[index]}\n';
+
+      if (index != 0) {
+        splitTestWords[index-1] = '${splitTestWords[index-1]}\n';
+      }
       _lastWords = splitTestWords.join(' ');
     });
   }
@@ -129,22 +132,28 @@ class MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Column(
+      body: ListView(
         // ignore: sort_child_properties_last
+        padding: EdgeInsets.only(top: 30, left: 8),
         children: <Widget>[
           WordSelectableText(
             selectable: true,
             highlight: true,
             highlightColor: Colors.deepOrangeAccent,
             text: _lastWords,
+            // text: testWords,
             onWordTapped: (word, index) {
-              // print(word);
-              // print(index);
+              print(word);
+              print(index);
               splitText(word, index!);
             },
+            // ignore: prefer_const_constructors
+            style: TextStyle(fontSize: 18,   height: 1.2 ),
           ),
-          Text(
-            _speechToText.isListening
+          Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: Text(
+              _speechToText.isListening
                 ? _lastWords
                 // If listening isn't active but could be tell the user
                 // how to start it, otherwise indicate that speech
@@ -153,6 +162,10 @@ class MyHomePageState extends State<MyHomePage> {
                 : _speechEnabled
                     ? 'Tap the microphone to start listening...'
                     : 'Speech not available',
+              // ignore: prefer_const_constructors
+              // style: TextStyle(fontSize: 18,   height: 1.0 ),
+              style: const TextStyle(fontSize: 18),
+            ),
           ),
         ],
         // This trailing comma makes auto-formatting nicer for build methods.
