@@ -55,7 +55,7 @@ class MyHomePageState extends State<MyHomePage> {
   String buffer = '';
   String testWords =
       "Flutter transforms the app development process. Build, test, and deploy beautiful mobile, web, desktop, and embedded apps from a single codebase.";
-      
+
   SpeechToText _speechToText = SpeechToText();
   bool _speechEnabled = false;
   String _lastWords = '';
@@ -129,36 +129,41 @@ class MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: ListBody(
-        children: WordSelectableText(
-          selectable: true,
-          highlight: true,
-          highlightColor: Colors.deepOrangeAccent,
-          text: testWords,
-          onWordTapped: (word, index) {
-            // print(word);
-            // print(index);
-            splitText(word, index!);
-          },
-        ),
-      body: Text(
-        _speechToText.isListening
-          ? '$_lastWords'
-          // If listening isn't active but could be tell the user
-          // how to start it, otherwise indicate that speech
-          // recognition is not yet ready or not supported on
-          // the target device
-          : _speechEnabled
-              ? 'Tap the microphone to start listening...'
-              : 'Speech not available',
+      body: Column(
+        // ignore: sort_child_properties_last
+        children: <Widget>[
+          WordSelectableText(
+            selectable: true,
+            highlight: true,
+            highlightColor: Colors.deepOrangeAccent,
+            text: testWords,
+            onWordTapped: (word, index) {
+              // print(word);
+              // print(index);
+              splitText(word, index!);
+            },
+          ),
+          Text(
+            _speechToText.isListening
+                ? _lastWords
+                // If listening isn't active but could be tell the user
+                // how to start it, otherwise indicate that speech
+                // recognition is not yet ready or not supported on
+                // the target device
+                : _speechEnabled
+                    ? 'Tap the microphone to start listening...'
+                    : 'Speech not available',
+          ),
+        ],
+         // This trailing comma makes auto-formatting nicer for build methods.
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed:
-            // If not yet listening for speech start, otherwise stop
-            _speechToText.isNotListening ? _startListening : _stopListening,
-        tooltip: 'Listen',
-        child: Icon(_speechToText.isNotListening ? Icons.mic_off : Icons.mic),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+          onPressed:
+              // If not yet listening for speech start, otherwise stop
+              _speechToText.isNotListening ? _startListening : _stopListening,
+          tooltip: 'Listen',
+          child: Icon(_speechToText.isNotListening ? Icons.mic_off : Icons.mic),
+        ),
     );
   }
 }
