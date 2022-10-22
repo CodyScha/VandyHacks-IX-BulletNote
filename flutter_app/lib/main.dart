@@ -109,9 +109,9 @@ class MyHomePageState extends State<MyHomePage> {
 
   void splitText(String word, int index) {
     setState(() {
-      List<String> splitTestWords = testWords.split(' ');
+      List<String> splitTestWords = _lastWords.split(' ');
       splitTestWords[index] = '${splitTestWords[index]}\n';
-      testWords = splitTestWords.join(' ');
+      _lastWords = splitTestWords.join(' ');
     });
   }
 
@@ -136,7 +136,7 @@ class MyHomePageState extends State<MyHomePage> {
             selectable: true,
             highlight: true,
             highlightColor: Colors.deepOrangeAccent,
-            text: testWords,
+            text: _lastWords,
             onWordTapped: (word, index) {
               // print(word);
               // print(index);
@@ -155,15 +155,15 @@ class MyHomePageState extends State<MyHomePage> {
                     : 'Speech not available',
           ),
         ],
-         // This trailing comma makes auto-formatting nicer for build methods.
+        // This trailing comma makes auto-formatting nicer for build methods.
       ),
       floatingActionButton: FloatingActionButton(
-          onPressed:
-              // If not yet listening for speech start, otherwise stop
-              _speechToText.isNotListening ? _startListening : _stopListening,
-          tooltip: 'Listen',
-          child: Icon(_speechToText.isNotListening ? Icons.mic_off : Icons.mic),
-        ),
+        onPressed:
+            // If not yet listening for speech start, otherwise stop
+            _speechToText.isNotListening ? _startListening : _stopListening,
+        tooltip: 'Listen',
+        child: Icon(_speechToText.isNotListening ? Icons.mic_off : Icons.mic),
+      ),
     );
   }
 }
