@@ -85,15 +85,20 @@ class MyHomePageState extends State<MyHomePage> {
   /// listen method.
   void _stopListening() async {
     await _speechToText.stop();
-    setState(() {});
+    bullets.add(_lastWords);
+    setState(() {
+      _lastWords = "";
+    });
   }
 
   /// This is the callback that the SpeechToText plugin calls when
   /// the platform returns recognized words.
   void _onSpeechResult(SpeechRecognitionResult result) {
-    setState(() {
+    if (_speechToText.isListening == true) {
+      setState(() {
       _lastWords = result.recognizedWords;
     });
+    }
   }
 
   void incrementCounter() {
@@ -108,16 +113,16 @@ class MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void splitText(String word, int index) {
+  void splitText(String word, int index, int pointIndex) {
     setState(() {
-      List<String> splitTestWords = _lastWords.split(' ');
+      List<String> splitPoint = bullets[pointIndex].split(' ');
 
       if (index != 0) {
-        splitTestWords[index-1] = '${splitTestWords[index-1]}\n';
+        splitPoint[index - 1] = '${splitPoint[index - 1]}\n';
       }
-      _lastWords = splitTestWords.join(' ');
-      bullets.clear();
-      bullets.add(_lastWords);
+      bullets[pointIndex] = splitPoint.join(' ');
+      // bullets.clear();
+      // bullets.add(_lastWords);
     });
   }
 
@@ -147,9 +152,10 @@ class MyHomePageState extends State<MyHomePage> {
               onWordTapped: (word, index) {
                 // print(word);
                 // print(index);
-                splitText(word, index!);
+                splitText(word, index!, bullets.indexOf(point));
               },
             ),
+          Text(_lastWords),
         ],
         // This trailing comma makes auto-formatting nicer for build methods.
       ),
