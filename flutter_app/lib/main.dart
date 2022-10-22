@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:word_selectable_text/word_selectable_text.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
@@ -52,6 +53,9 @@ class MyHomePage extends StatefulWidget {
 class MyHomePageState extends State<MyHomePage> {
   int counter = 0;
   String buffer = '';
+  String testWords =
+      "Flutter transforms the app development process. Build, test, and deploy beautiful mobile, web, desktop, and embedded apps from a single codebase.";
+      
   SpeechToText _speechToText = SpeechToText();
   bool _speechEnabled = false;
   String _lastWords = '';
@@ -103,6 +107,14 @@ class MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void splitText(String word, int index) {
+    setState(() {
+      List<String> splitTestWords = testWords.split(' ');
+      splitTestWords[index] = '${splitTestWords[index]}\n';
+      testWords = splitTestWords.join(' ');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -117,6 +129,18 @@ class MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
+      body: ListBody(
+        children: WordSelectableText(
+          selectable: true,
+          highlight: true,
+          highlightColor: Colors.deepOrangeAccent,
+          text: testWords,
+          onWordTapped: (word, index) {
+            // print(word);
+            // print(index);
+            splitText(word, index!);
+          },
+        ),
       body: Text(
         _speechToText.isListening
           ? '$_lastWords'
