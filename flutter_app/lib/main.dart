@@ -59,6 +59,7 @@ class MyHomePageState extends State<MyHomePage> {
   SpeechToText _speechToText = SpeechToText();
   bool _speechEnabled = false;
   String _lastWords = '';
+  List<String> bullets = ['Your text here'];
 
   @override
   void initState() {
@@ -115,6 +116,8 @@ class MyHomePageState extends State<MyHomePage> {
         splitTestWords[index-1] = '${splitTestWords[index-1]}\n';
       }
       _lastWords = splitTestWords.join(' ');
+      bullets.clear();
+      bullets.add(_lastWords);
     });
   }
 
@@ -134,39 +137,19 @@ class MyHomePageState extends State<MyHomePage> {
       ),
       body: ListView(
         // ignore: sort_child_properties_last
-        padding: EdgeInsets.only(top: 30, left: 8),
-        children: <Widget>[
-          WordSelectableText(
-            selectable: true,
-            highlight: true,
-            highlightColor: Colors.deepOrangeAccent,
-            text: _lastWords,
-            // text: testWords,
-            onWordTapped: (word, index) {
-              print(word);
-              print(index);
-              splitText(word, index!);
-            },
-            // ignore: prefer_const_constructors
-            style: TextStyle(fontSize: 18,   height: 1.2 ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: Text(
-              _speechToText.isListening
-                ? _lastWords
-                // If listening isn't active but could be tell the user
-                // how to start it, otherwise indicate that speech
-                // recognition is not yet ready or not supported on
-                // the target device
-                : _speechEnabled
-                    ? 'Tap the microphone to start listening...'
-                    : 'Speech not available',
-              // ignore: prefer_const_constructors
-              // style: TextStyle(fontSize: 18,   height: 1.0 ),
-              style: const TextStyle(fontSize: 18),
+        children: [
+          for (String point in bullets)
+            WordSelectableText(
+              selectable: true,
+              highlight: true,
+              highlightColor: Colors.deepOrangeAccent,
+              text: point,
+              onWordTapped: (word, index) {
+                // print(word);
+                // print(index);
+                splitText(word, index!);
+              },
             ),
-          ),
         ],
         // This trailing comma makes auto-formatting nicer for build methods.
       ),
