@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:word_selectable_text/word_selectable_text.dart';
 
 void main() {
   runApp(const MyApp());
@@ -50,6 +51,8 @@ class MyHomePage extends StatefulWidget {
 class MyHomePageState extends State<MyHomePage> {
   int counter = 0;
   String buffer = '';
+  String testWords =
+      "Flutter transforms the app development process. Build, test, and deploy beautiful mobile, web, desktop, and embedded apps from a single codebase.";
 
   void incrementCounter() {
     setState(() {
@@ -60,6 +63,14 @@ class MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       counter++;
       buffer += 'Test.. ';
+    });
+  }
+
+  void splitText(String word, int index) {
+    setState(() {
+      List<String> splitTestWords = testWords.split(' ');
+      splitTestWords[index] = '${splitTestWords[index]}\n';
+      testWords = splitTestWords.join(' ');
     });
   }
 
@@ -77,8 +88,18 @@ class MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Text(
-        '$buffer'
+      body: Container(
+        child: WordSelectableText(
+          selectable: true,
+          highlight: true,
+          highlightColor: Colors.deepOrangeAccent,
+          text: testWords,
+          onWordTapped: (word, index) {
+            // print(word);
+            // print(index);
+            splitText(word, index!);
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: incrementCounter,
