@@ -59,6 +59,7 @@ class MyHomePageState extends State<MyHomePage> {
   SpeechToText _speechToText = SpeechToText();
   bool _speechEnabled = false;
   String _lastWords = '';
+  List<String> bullets = ['Your text here'];
 
   @override
   void initState() {
@@ -112,6 +113,8 @@ class MyHomePageState extends State<MyHomePage> {
       List<String> splitTestWords = _lastWords.split(' ');
       splitTestWords[index] = '${splitTestWords[index]}\n';
       _lastWords = splitTestWords.join(' ');
+      bullets.clear();
+      bullets.add(_lastWords);
     });
   }
 
@@ -129,31 +132,21 @@ class MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Column(
+      body: ListView(
         // ignore: sort_child_properties_last
-        children: <Widget>[
-          WordSelectableText(
-            selectable: true,
-            highlight: true,
-            highlightColor: Colors.deepOrangeAccent,
-            text: _lastWords,
-            onWordTapped: (word, index) {
-              // print(word);
-              // print(index);
-              splitText(word, index!);
-            },
-          ),
-          Text(
-            _speechToText.isListening
-                ? _lastWords
-                // If listening isn't active but could be tell the user
-                // how to start it, otherwise indicate that speech
-                // recognition is not yet ready or not supported on
-                // the target device
-                : _speechEnabled
-                    ? 'Tap the microphone to start listening...'
-                    : 'Speech not available',
-          ),
+        children: [
+          for (String point in bullets)
+            WordSelectableText(
+              selectable: true,
+              highlight: true,
+              highlightColor: Colors.deepOrangeAccent,
+              text: point,
+              onWordTapped: (word, index) {
+                // print(word);
+                // print(index);
+                splitText(word, index!);
+              },
+            ),
         ],
         // This trailing comma makes auto-formatting nicer for build methods.
       ),
