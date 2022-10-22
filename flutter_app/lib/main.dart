@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.deepOrange,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'Note Taking'),
     );
   }
 }
@@ -111,7 +111,10 @@ class MyHomePageState extends State<MyHomePage> {
   void splitText(String word, int index) {
     setState(() {
       List<String> splitTestWords = _lastWords.split(' ');
-      splitTestWords[index] = '${splitTestWords[index]}\n';
+
+      if (index != 0) {
+        splitTestWords[index-1] = '${splitTestWords[index-1]}\n';
+      }
       _lastWords = splitTestWords.join(' ');
       bullets.clear();
       bullets.add(_lastWords);
