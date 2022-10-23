@@ -96,8 +96,8 @@ class MyHomePageState extends State<MyHomePage> {
   void _onSpeechResult(SpeechRecognitionResult result) {
     if (_speechToText.isListening == true) {
       setState(() {
-      _lastWords = result.recognizedWords;
-    });
+        _lastWords = result.recognizedWords;
+      });
     }
   }
 
@@ -118,9 +118,27 @@ class MyHomePageState extends State<MyHomePage> {
       List<String> splitPoint = bullets[pointIndex].split(' ');
 
       if (index != 0) {
-        splitPoint[index - 1] = '${splitPoint[index - 1]}\n';
+        //bullets.add(splitPoint[index - 1]);
+        // splitPoint[index - 1] = '${splitPoint[index - 1]}\n';
+
+        List<String> beforeSplit = [];
+        List<String> afterSplit = [];
+
+        for (int i = 0; i < splitPoint.length; i++) {
+          if (i < index) {
+            beforeSplit.add(splitPoint[i]);
+          } else {
+            afterSplit.add(splitPoint[i]);
+          }
+        }
+        bullets.remove(bullets[pointIndex]);
+        //bullets.remove(bullets[bullets.length - 1]);
+        bullets.insert(pointIndex, beforeSplit.join(' '));
+        bullets.insert(pointIndex + 1, afterSplit.join(' '));
+      } else {
+        bullets[pointIndex] = splitPoint.join(' ');
       }
-      bullets[pointIndex] = splitPoint.join(' ');
+      //bullets.add(splitPoint.join(' '));
       // bullets.clear();
       // bullets.add(_lastWords);
     });
@@ -144,7 +162,7 @@ class MyHomePageState extends State<MyHomePage> {
         // ignore: sort_child_properties_last
         children: [
           for (String point in bullets)
-            WordSelectableText(
+            /*WordSelectableText(
               selectable: true,
               highlight: true,
               highlightColor: Colors.deepOrangeAccent,
@@ -154,6 +172,31 @@ class MyHomePageState extends State<MyHomePage> {
                 // print(index);
                 splitText(word, index!, bullets.indexOf(point));
               },
+            ),*/
+            Row(
+              children: [
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  "\u2022",
+                  style: TextStyle(fontSize: 30),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                WordSelectableText(
+                  selectable: true,
+                  highlight: true,
+                  highlightColor: Colors.deepOrangeAccent,
+                  text: point,
+                  onWordTapped: (word, index) {
+                    // print(word);
+                    // print(index);
+                    splitText(word, index!, bullets.indexOf(point));
+                  },
+                ),
+              ],
             ),
           Text(_lastWords),
         ],
