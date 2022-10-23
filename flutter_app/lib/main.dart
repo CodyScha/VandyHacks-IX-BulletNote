@@ -215,7 +215,19 @@ class MyHomePageState extends State<MyHomePage> {
         children: [
           // ignore: prefer_const_constructors
           ActionButton(
-            onPressed: () => {},
+            onPressed: () => showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                      title: const Text("How to use BulletNote:"),
+                      content: const Text(
+                          "Press record in menu button to start recording speech.\n\nTap on a word to create new bullet point.\n\nSingle tap before bullet to increase indentation.\n\nDouble tap before bullet to decrease indentation."),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, "OK"),
+                          child: const Text("OK"),
+                        )
+                      ],
+                    )),
             icon: const Icon(Icons.help_outline_rounded),
           ),
           // ignore: prefer_const_constructors
