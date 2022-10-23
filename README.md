@@ -19,4 +19,4 @@ We made a functional and working app. We also completed all core goals and some 
 Apart from the new technologies, we gained a better understanding of how to completely design and develop a project from start to finish within a constricted time frame. Gained more experience working in a collaborative developer environment.
 
 ## What's next for BulletNote
-We would like to take this idea further and make this app available for hearing-impaired students at Vanderbilt, SIUE, and schools across the nation.
+First we would like to make the text more editable and allow the user to save the text to their local machine or to the cloud. Next, we would like to take this idea even further and make this app available for hearing-impaired students at Vanderbilt, SIUE, and schools across the nation.
