@@ -39,6 +39,7 @@ dependencies:
   word_selectable_text: ^0.2.0
   speech_to_text: ^6.1.0
   get: ^4.6.5
+  firebase_core: ^2.1.0
 
 dev_dependencies:
   flutter_test:
