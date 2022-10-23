@@ -21,11 +21,20 @@ class DefaultFirebaseOptions {
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        return android;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for android - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.iOS:
-        return ios;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for ios - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -51,33 +60,5 @@ class DefaultFirebaseOptions {
     authDomain: 'bulletnote-16b7d.firebaseapp.com',
     storageBucket: 'bulletnote-16b7d.appspot.com',
     measurementId: 'G-K1525SSB5M',
-  );
-
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDg6pMNpeej5QdYRc5yF6Akq8R3uH0anXQ',
-    appId: '1:813053928991:android:6a121cc5cc42855b3e572a',
-    messagingSenderId: '813053928991',
-    projectId: 'bulletnote-16b7d',
-    storageBucket: 'bulletnote-16b7d.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyA1BqtZ0ftWK5mDTmBqodT2r7uhsUv6pcU',
-    appId: '1:813053928991:ios:449cf11d2e12ba163e572a',
-    messagingSenderId: '813053928991',
-    projectId: 'bulletnote-16b7d',
-    storageBucket: 'bulletnote-16b7d.appspot.com',
-    iosClientId: '813053928991-ccko7vgj2nt78s3vmr3riq8d5juv7f4k.apps.googleusercontent.com',
-    iosBundleId: 'com.example.testingFlutter',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyA1BqtZ0ftWK5mDTmBqodT2r7uhsUv6pcU',
-    appId: '1:813053928991:ios:449cf11d2e12ba163e572a',
-    messagingSenderId: '813053928991',
-    projectId: 'bulletnote-16b7d',
-    storageBucket: 'bulletnote-16b7d.appspot.com',
-    iosClientId: '813053928991-ccko7vgj2nt78s3vmr3riq8d5juv7f4k.apps.googleusercontent.com',
-    iosBundleId: 'com.example.testingFlutter',
   );
 }
