@@ -1,4 +1,4 @@
-# VandyHacks-IX-Note-Taking
+# VandyHacks-IX-BulletNote
 
 ## Inspiration
 We conducted research and found that the most challenging activity in school for hearing-impaired students is taking notes. One of our group members also has experience with family members facing this issue.
