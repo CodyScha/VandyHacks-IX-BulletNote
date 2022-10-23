@@ -162,22 +162,9 @@ class MyHomePageState extends State<MyHomePage> {
         // ignore: sort_child_properties_last
         children: [
           for (String point in bullets)
-            /*WordSelectableText(
-              selectable: true,
-              highlight: true,
-              highlightColor: Colors.deepOrangeAccent,
-              text: point,
-              onWordTapped: (word, index) {
-                // print(word);
-                // print(index);
-                splitText(word, index!, bullets.indexOf(point));
-              },
-            ),*/
             Row(
               children: [
-                SizedBox(
-                  width: 10,
-                ),
+                SpaceChanger(),
                 Text(
                   "\u2022",
                   style: TextStyle(fontSize: 30),
@@ -208,6 +195,46 @@ class MyHomePageState extends State<MyHomePage> {
             _speechToText.isNotListening ? _startListening : _stopListening,
         tooltip: 'Listen',
         child: Icon(_speechToText.isNotListening ? Icons.mic_off : Icons.mic),
+      ),
+    );
+  }
+}
+
+class SpaceChanger extends StatefulWidget {
+  //final Widget child;
+
+  const SpaceChanger({Key? key}) : super(key: key);
+  @override
+  State<SpaceChanger> createState() => _SpaceChangerState();
+}
+
+class _SpaceChangerState extends State<SpaceChanger> {
+  double size = 50;
+
+  void _increaseSize() {
+    setState(() {
+      if (size >= 50) {
+        size += 50;
+      }
+    });
+  }
+
+  void _decreaseSize() {
+    setState(() {
+      if (size > 50) {
+        size -= 50;
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: size,
+      height: 50,
+      child: GestureDetector(
+        onTap: _increaseSize,
+        onDoubleTap: _decreaseSize,
       ),
     );
   }
